@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/título_preference_category_medio_de_transporte"/>
+
+    <ListPreference
+        android:key="mode"
+        android:title="@string/título_preference_medio_de_transporte"
+        android:summary="@string/summary_preference_medio_de_transporte"
+        android:entries="@array/mode_names"
+        android:entryValues="@array/mode_values"
+        android:defaultValue="@string/conduciendo_valor"/>
+
+
+
+
+    <PreferenceCategory android:title="@string/título_preference_category_peaje"/>
+
+        <CheckBoxPreference
+            android:key="avoid_tolls"
+            android:defaultValue="true"
+            android:title="@string/título_preference_category_peaje"
+            android:summaryOn="@string/summary_on_preference_peaje"
+            android:summaryOff="@string/summary_off_preference_peaje"/>
+
+    <PreferenceCategory
+        android:title="@string/título_preference_category_language"/>
+
+    <ListPreference
+        android:key="language"
+        android:title="@string/título_preference_language"
+        android:summary="@string/summary_preference_language"
+        android:entries="@array/language_names"
+        android:entryValues="@array/language_values"
+        android:defaultValue="@string/idioma_español_valor"/>
+
+
+
+
+</PreferenceScreen>

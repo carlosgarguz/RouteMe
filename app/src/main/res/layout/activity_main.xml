@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_starting_point_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:visibility="visible">
+
+        <fragment
+            android:id="@+id/starting_point_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_starting_point_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/starting_point_text_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:background="@color/transparent_grey"
+                />
+
+            <ImageButton
+                android:id="@+id/delete_starting_point_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent_grey"
+                android:layout_weight="1"
+                android:src="@android:drawable/presence_offline" />
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider_starting_end_point"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            android:background="@android:color/darker_gray"/>
+
+
+
+        <LinearLayout
+            android:id="@+id/layout_end_point_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:visibility="gone">
+
+            <fragment
+                android:id="@+id/end_point_autocomplete_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_ending_point_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/ending_point_text_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:background="@color/transparent_grey"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+            <ImageButton
+                android:id="@+id/delete_ending_point_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/transparent_grey"
+                android:src="@android:drawable/presence_offline" />
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider_ending_point_map"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            android:background="@android:color/darker_gray"/>
+
+
+
+        <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/punto_de_partida"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".70"
+                android:hint="@string/hint_punto_de_partida" />
+
+            <ImageButton
+                android:id="@+id/boton_busqueda_rapida_salida"
+                android:layout_width=".0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".30"
+                android:src="@android:drawable/ic_search_category_default" />
+
+
+
+        </LinearLayout> -->
+
+        <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/destino"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".70"
+                android:hint="@string/hint_destino" />
+
+
+            <ImageButton
+                android:id="@+id/boton_busqueda_rapida_destino"
+                android:layout_width=".0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".30"
+                android:src="@android:drawable/ic_search_category_default" />
+        </LinearLayout>
+        -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="70">
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map_fragment"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                tools:context="com.uc3m.it.mymapsexample.ActivityWithXMLMapFragment" />
+
+
+            <TextView
+                android:id="@+id/text_view_number_stage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/circle"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:gravity="center"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/texto_tiempo_ruta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_borders_blue"
+                android:textAlignment="center"
+                android:padding="5dp"
+                tools:ignore="RtlCompat" />
+
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                android:id="@+id/start_trip_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:fabCustomSize="60dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="70dp"
+                android:layout_marginRight="80dp"
+                android:src="@drawable/ic_start_trip"
+                android:backgroundTint="#10D349"
+                android:foregroundGravity="center"
+                android:visibility="gone">
+
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                android:id="@+id/configuration_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:fabCustomSize="60dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="60dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/ic_configuration"
+                android:backgroundTint="@color/grey"
+                android:foregroundGravity="center"
+                android:visibility="visible">
+
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                android:id="@+id/cancel_trip_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:fabCustomSize="60dp"
+                android:layout_gravity="bottom|left"
+                android:layout_marginBottom="70dp"
+                android:layout_marginLeft="80dp"
+                android:src="@drawable/ic_cancel_trip"
+                android:backgroundTint="@color/red"
+                android:foregroundGravity="center"
+                android:visibility="gone">
+
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+            <Button
+                android:id="@+id/finish_stage_button"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                app:fabCustomSize="60dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/rounded_borders_light_blue"
+                android:foregroundGravity="center"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:padding="2dp"
+                android:text="@string/button_finish_stage">
+
+            </Button>
+
+
+
+
+
+        </FrameLayout>
+
+
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="5"
+            >
+
+
+            <Button
+                android:id="@+id/boton_perfil"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:text="@string/profile_button" />
+
+            <Button
+                android:id="@+id/boton_crear_ruta"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="@string/create_route_button" />
+        </LinearLayout>-->
+
+        </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

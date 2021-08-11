@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">RouteMe</string>
+    <string name="hint_punto_de_partida"> Introduce punto de partida</string>
+    <string name="hint_destino">Introduce el destino</string>
+    <string name="profile_button"> Perfil </string>
+    <string name="create_route_button"> Crear ruta </string>
+    <string name="titulo_plan_route"> Planea tu ruta </string>
+    <string name="duracion_card"> Duración </string>
+    <string name="stage"> Stage </string>
+    <string name="numero_de_destinos"> Número de destinos </string>
+    <string name="numero_rutas_restantes"> Etapas restantes </string>
+    <string name="duracion_total"> Duración total</string>
+    <string name="calcular_ruta"> Calcular ruta </string>
+    <string name="empezar_ruta"> Realizar siguiente etapa </string>
+    <string name="OK"> OK </string>
+    <string name="firebase_default_message">Sin información sobre este lugar</string>
+    <string name="tiempo_parada"> Programar parada (min): </string>
+    <string name="confirmar"> Confirmar </string>
+    <string name="reestablecer"> Reestablecer </string>
+    <string name="texto_snack_bar"> ¿Lo borraste por error? </string>
+    <string name="deshacer_snack_bar"> Deshacer </string>
+    <string name="titulo_actividad_planear_ruta"> Planea tu ruta </string>
+    <string name="button_finish_stage"> Finalizar etapa </string>
+    <string name="boton_ruta_simple"> Ruta simple</string>
+    <string name="configuration"> Ajustes </string>
+    <string name="pregunta_qué_hacer"> ¿Qué quieres hacer? </string>
+
+
+    <string name="resetear_preferences"> Reestablecer valores predeterminados </string>
+
+    <!--Preference-->
+    <string name="título_preference_category_medio_de_transporte"> Elige medio de transporte </string>
+    <string name="título_preference_medio_de_transporte"> Medio de transporte </string>
+    <string name="summary_preference_medio_de_transporte">Elige el medio de transporte</string>
+    <string name="conduciendo"> Conduciendo </string>
+    <string name="andando"> Andando </string>
+    <string name="conduciendo_valor">driving</string>
+    <string name="andando_valor">walking</string>
+    <string name="título_preference_category_peaje"> Activa evitar peajes </string>
+    <string name="título_preferencepeaje"> Evitar peajes </string>
+    <string name="summary_on_preference_peaje"> Evitar peajes activado </string>
+    <string name="summary_off_preference_peaje"> Evitar peajes desactivado </string>
+    <string name="título_preference_category_language"> Elige idioma </string>
+    <string name="título_preference_language"> Idioma </string>
+    <string name="summary_preference_language"> Elige idioma de la aplicación </string>
+    <string name="idioma_español"> Español </string>
+    <string name="idioma_inglés"> Inglés </string>
+    <string name="idioma_español_valor">es</string>
+    <string name="idioma_inglés_valor">en</string>
+    <string name="title_pop_up_fav_routes"> Estas son tus rutas favoritas </string>
+
+    <!--Opciones rutas favoritas-->
+    <string name="añadir_a_favoritas"> Añadir a rutas favoritas </string>
+    <string name="ver_favoritas"> Ver rutas favoritas </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="titulo_dialog_accept_refuse"> ¡Tiempo de parada pendiente! </string>
+    <string name="titulo_dialog_fav_routes"> ¿Quieres añadir esta ruta a favoritos? </string>
+    <string name="summary_dialog_fav_routes"> Escribe el nombre que le quieres dar a la ruta y pulsa aceptar. </string>
+    <string name="hint_name_of_route"> Nombre ruta </string>
+    <string name="aceptar"> Aceptar </string>
+    <string name="rechazar"> Rechazar </string>
+    <string name="cancelar"> cancelar </string>
+
+
+
+    <string name="open_navigation_drawer">Abrir</string>
+    <string name="close_navigation_drawer">Cerrar</string>
+
+</resources>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title_dialog_fav_routes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_dialog_fav_routes"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        >
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/description_dialog_accept_refuse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="5dp"
+        android:text="@string/summary_dialog_fav_routes"
+        />
+
+    <EditText
+        android:id="@+id/edit_text_name_of_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:hint="@string/hint_name_of_route">
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_refuse_dialog_fav_routes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="@string/cancelar">
+
+        </Button>
+
+        <Button
+            android:id="@+id/button_accept_dialog_fav_routes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="@string/aceptar">
+
+        </Button>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

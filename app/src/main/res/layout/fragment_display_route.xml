@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.DisplayRouteFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#CC2B90C6"
+            >
+
+
+            <TextView
+                android:id="@+id/text_view_stages_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:text="@string/numero_rutas_restantes"
+                android:layout_gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/text_view_number_stages_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_routes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:id="@+id/text_view_total_duration"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/rounded_corner"
+                android:text="100 min"
+                android:textColor="#08137A"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat">
+
+            </TextView>
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/return_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:fabCustomSize="60dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_back"
+                android:backgroundTint="@color/yellow_down_arrow"
+                android:foregroundGravity="center"
+                android:visibility="visible"
+                >
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

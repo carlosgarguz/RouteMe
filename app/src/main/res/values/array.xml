@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+
+    <string-array name="mode_names">
+        <item>@string/conduciendo</item>
+        <item>@string/andando</item>
+    </string-array>
+
+    <string-array name="mode_values">
+        <item>@string/conduciendo_valor</item>
+        <item>@string/andando_valor</item>
+    </string-array>
+
+    <string-array name="language_names">
+        <item>@string/idioma_español</item>
+        <item>@string/idioma_inglés</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>@string/idioma_español_valor</item>
+        <item>@string/idioma_inglés_valor</item>
+    </string-array>
+
+    <string-array name="options_fav_routes">
+        <item>@string/ver_favoritas</item>
+        <item>@string/añadir_a_favoritas</item>
+    </string-array>
+
+
+</resources>
