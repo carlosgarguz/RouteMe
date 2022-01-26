@@ -180,7 +180,9 @@ public class ParserJsonRuta extends AsyncTask<String, Void, RouteTime[][]> {
         while(reader.hasNext()){
             name = reader.nextName();
            // Log.i("debug json parser", name);
-            if(name.equals("duration")){
+            if(name.equals("distance")){
+                readDistanceObject(reader, matrix);
+            }else if(name.equals("duration")) {
                 readDurationObject(reader, matrix);
             }else{
                 reader.skipValue();
@@ -188,6 +190,29 @@ public class ParserJsonRuta extends AsyncTask<String, Void, RouteTime[][]> {
         }
         reader.endObject();
         return matrix;
+    }
+
+    private void readDistanceObject(JsonReader reader, RouteTime[][] matrix) throws IOException {
+        String name;
+        reader.beginObject();
+        while (reader.hasNext()) {
+            name = reader.nextName();
+            //Log.i("debug json parser", name);
+            if (name.equals("text")) {
+
+                columnNumber++;
+                matrix[rowNumber][columnNumber].setTextDistance(reader.nextString());
+
+                //Log.i("debug json parser", "duracion en texto: " + reader.nextString());
+            } else if (name.equals("value")) {
+
+                matrix[rowNumber][columnNumber].setDistanceInNumber(reader.nextLong());
+                //Log.i("debug json parser", "duracion en numero: " + reader.nextLong());
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
     }
 
     private RouteTime[][] readDurationObject(JsonReader reader, RouteTime[][] matrix) throws IOException {
@@ -198,7 +223,7 @@ public class ParserJsonRuta extends AsyncTask<String, Void, RouteTime[][]> {
             //Log.i("debug json parser", name);
             if(name.equals("text")) {
 
-                columnNumber++;
+
               //  Log.i("debug json parser", "numero de fila: " + rowNumber + ", y numero de columna: " + columnNumber);
                 matrix[rowNumber][columnNumber].setTextTime(reader.nextString());
                 matrix[rowNumber][columnNumber].setStartPointID(rowNumber);

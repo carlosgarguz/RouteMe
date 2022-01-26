@@ -2,6 +2,7 @@ package com.carlosgarguz.routeme.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,11 +18,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -54,6 +58,8 @@ import com.carlosgarguz.routeme.paths.TravelSalesmanProblem;
 import com.carlosgarguz.routeme.utils.DestinationCard;
 import com.carlosgarguz.routeme.utils.DestinationsAdapter;
 import com.carlosgarguz.routeme.utils.SwipeDestinationCardCallback;
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
@@ -63,18 +69,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class PlanRouteActivity extends AppCompatActivity implements View.OnClickListener{
 
     final int FIRST_STAGE_CODE = 100;
-    final String GOOGLE_KEY = "AIzaSyC-bfmAZTXvjIFjpaDHDpICvPA3lXCP_QU";
+    final int FAV_ROUTE_CODE = 200;
+    final int FAV_ROUTE_SUCCESS_DELETE_CODE = 201;
+    final int FAV_ROUTE_FAIL_DELETE_CODE = 202;
+    final String GOOGLE_KEY = "YOUR GOOGLE API KEY";
     /*ArrayList<DestinationCard> destinations = new ArrayList<>();
     DestinationsAdapter destinationsAdapter;
     RecyclerView rvDestinations;*/
@@ -89,6 +106,7 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
     RouteTime[][] matrix;
     Route route;
     Button buttonComputeRoute;
+    int startingPoint = 0;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     double currentLatitude;
@@ -99,6 +117,10 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
 
     int currentStage = 1;
 
+    FirebaseFirestore mFirestore;
+    DatabaseReference db;
+
+
 
 
 
@@ -107,6 +129,8 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         Log.i("pruebas destinos", "on create called");
 
+        mFirestore = FirebaseFirestore.getInstance();
+        db = FirebaseDatabase.getInstance().getReference();
 
         setContentView(R.layout.activity_plan_route);
         Log.i("pruebas destinos", "on create called");
@@ -122,7 +146,7 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
         //Instanciamos los fragments
         fragmentComputerRoute = new ComputeRouteFragment();
         fragmentDisplayRoute = new DisplayRouteFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_plan_route, fragmentComputerRoute).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_plan_route, fragmentComputerRoute, "COMPUTE_ROUTE").commit();
 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -180,34 +204,40 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
                 return true;
 
             case R.id.action_fav_routes:
-                String[] options = {"Ver rutas favoritas", "Añadir ruta a favoritas"};
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.pregunta_qué_hacer);
-                builder.setItems(R.array.options_fav_routes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int option) {
-                        switch (option){
-                            case 0:
-                                Intent i = new Intent(PlanRouteActivity.this, PopUpDisplayFavRoutesActivity.class);
-                                startActivity(i);
-                                break;
+                DisplayRouteFragment fragment = (DisplayRouteFragment) getSupportFragmentManager().findFragmentByTag("DISPLAY_ROUTE");
+                if(fragment != null && fragment.isVisible()){
+                    Toast.makeText(this, "Opción no disponible en la pantalla de esquema de ruta", Toast.LENGTH_LONG).show();
+                }else {
 
-                            case 1:
-                                if(listDestinations.size()>1){
-                                    addToFavRoutes();
-                                }else{
-                                    Toast.makeText(PlanRouteActivity.this, "Las rutas deben tener más de un destino", Toast.LENGTH_LONG).show();
-                                }
+                    String[] options = {"Ver rutas favoritas", "Añadir ruta a favoritas"};
 
-                                break;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle(R.string.pregunta_qué_hacer);
+                    builder.setItems(R.array.options_fav_routes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int option) {
+                            switch (option) {
+                                case 0:
+                                    Intent i = new Intent(PlanRouteActivity.this, PopUpDisplayFavRoutesActivity.class);
+                                    startActivityForResult(i, FAV_ROUTE_CODE);
+                                    break;
 
-                            default:
-                                break;
+                                case 1:
+                                    if (listDestinations.size() > 1) {
+                                        addToFavRoutes();
+                                    } else {
+                                        Toast.makeText(PlanRouteActivity.this, "Las rutas deben tener más de un destino", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                });
-                builder.show();
+                    });
+                    builder.show();
                 /*DbAssistant dbAssistant = new DbAssistant(PlanRouteActivity.this);
                 SQLiteDatabase db = dbAssistant.getWritableDatabase();
                 if(db != null){
@@ -215,7 +245,8 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
                 }else{
                     Toast.makeText(PlanRouteActivity.this, "No se creó", Toast.LENGTH_LONG).show();
                 }*/
-                return true;
+                    return true;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -236,15 +267,37 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
 
                 break;
 
+            case FAV_ROUTE_CODE:
+                switch (resultCode){
+                    case RESULT_OK:
+                        displayFavRoute(data);
+                        break;
+                    case FAV_ROUTE_SUCCESS_DELETE_CODE:
+                        Toast.makeText(this, "Ruta " + data.getStringExtra("fav_route_name") + " eliminada con éxito", Toast.LENGTH_LONG).show();
+                        break;
+                    case FAV_ROUTE_FAIL_DELETE_CODE:
+                        Toast.makeText(this, "No ha sido posible eliminar la ruta " + data.getStringExtra("fav_route_name"), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+
             default:
                 break;
         }
     }
 
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.boton_calcular_ruta:
+
+                /*Dialog dialog = new Dialog(this);
+
+                dialog.setContentView(R.layout.pop_up_add_info_firestore);
+                dialog.show();*/
 
                 if(activeFragment == 0) {
                     transaction = getSupportFragmentManager().beginTransaction();
@@ -258,6 +311,8 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
                         dialog.setCancelable(true);
                         dialog.show();
 
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PlanRouteActivity.this);
+                        builder.setMessage("");
                         computeBestRoute();
                         currentStage = 1;
                         dialog.dismiss();
@@ -275,8 +330,15 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
                     }
 
                 }else{
-                    sendNextStage();
+                    if(startingPoint!=0){
+                        Toast.makeText(PlanRouteActivity.this, "No puedes iniciar una ruta cuyo punto de partida no es tu ubicación", Toast.LENGTH_LONG).show();
+                    }else{
+                        sendNextStage();
+                    }
+
                 }
+
+
 
 
 
@@ -287,6 +349,52 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
                 break;
 
         }
+    }
+
+    private void crearDatos() {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("zonaCargaDescarga", false);
+        map.put("aparcamiento", "Sin información");
+        map.put("dobleFila", "Sin información");
+        map.put("trafico", "Sin información");
+        map.put("extraInfo", "Sin información");
+
+
+
+        /*String hash;
+        for(int i = 0; i<listDestinations.size(); i++){
+            Log.i("prueba geohash", "hola");
+            hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(listDestinations.get(i).getLatitude(), listDestinations.get(i).getLongitude()));
+            Log.i("prueba geohash", "el hash es: " + hash);
+        }*/
+
+        String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(listDestinations.get(0).getLatitude(), listDestinations.get(0).getLongitude()));
+
+
+
+        DocumentReference doc = mFirestore.collection("locs").document(String.valueOf(hash.charAt(0)))
+                .collection(String.valueOf(hash.charAt(1))).document(String.valueOf(hash.charAt(2)))
+                .collection(String.valueOf(hash.charAt(3))).document(String.valueOf(hash.charAt(4)))
+                .collection(String.valueOf(hash.charAt(5))).document(String.valueOf(hash.charAt(6)));
+
+        doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.i("prueba firebase", "DocumentSnapshot data: " + document.getData().toString());
+                    } else {
+                        Log.i("prueba firebase", "No such document, let's create it");
+                        doc.set(map);
+                    }
+                } else {
+                    Log.i("prueba firebase", "get failed with ", task.getException());
+                }
+            }
+        });
+        //Log.i("prueba geohash", "is complete: " + doc.toString());
     }
 
     private void sendNextStage() {
@@ -355,6 +463,7 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
         //Creamos la lista de coordenadas de los destinos
         ArrayList<LatLng> destinationCoordinates = new ArrayList<>();
         //Añadimos las coordenadas de nuestra posición
+
         destinationCoordinates.add(new LatLng(currentLatitude, currentLongitude));
         //Añadimos el resto de coordenadas
         for (int i = 0; i < listDestinations.size(); i++) {
@@ -365,9 +474,10 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String mode = prefs.getString("mode", "driving");
         String language = prefs.getString("language", "es");
+        String measurement = prefs.getString("measurement", "tiempo");
         boolean avoidTolls = prefs.getBoolean("avoid_tolls", true);
         //Creamos url
-        String url = Path.getMatrixApiUrl(destinationCoordinates, mode, language, GOOGLE_KEY);
+        String url = Path.getMatrixApiUrl(destinationCoordinates, mode, language, avoidTolls, GOOGLE_KEY);
         Log.i("prueba ruta compleja", url);
 
         //Una vez tenemos la url creada, parseamos el json para obtener la matriz de tiempos entre destinos
@@ -381,15 +491,31 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
             matrix = parserJsonRuta.execute(url, String.valueOf(side)).get();
             for(int i = 0; i<listDestinations.size(); i++) {
                  String destinationName = listDestinations.get(i).getDestinationName();
-                for (int j = 0; j < listDestinations.size()+1; j++) {
-                    matrix[i+1][j].setStartPointName(destinationName);
-                    matrix[j][i+1].setEndPointName(destinationName);
-                }
+                 if(startingPoint==0) {
+                     for (int j = 0; j < listDestinations.size() + 1; j++) {
+                         matrix[i + 1][j].setStartPointName(destinationName);
+                         matrix[j][i + 1].setEndPointName(destinationName);
+                     }
+                 }else{
+                     for (int j = 0; j < listDestinations.size(); j++) {
+                         matrix[i][j].setStartPointName(destinationName);
+                         matrix[j][i].setEndPointName(destinationName);
+                     }
+                 }
             }
+
             costMatrix = new int[side][side];
-            for (int i = 0; i < side; i++) {
-                for (int j = 0; j < side; j++) {
-                    costMatrix[i][j] = (int) matrix[i][j].getTimeInSeconds();
+            if(measurement.equals("tiempo")) {
+                for (int i = 0; i < side; i++) {
+                    for (int j = 0; j < side; j++) {
+                        costMatrix[i][j] = (int) matrix[i][j].getTimeInSeconds();
+                    }
+                }
+            }else{
+                for (int i = 0; i < side; i++) {
+                    for (int j = 0; j < side; j++) {
+                        costMatrix[i][j] = (int) matrix[i][j].getDistanceInNumber();
+                    }
                 }
             }
 
@@ -403,6 +529,9 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
 
 
             int [] rest = generateRest(side, ComputeRouteFragment.finalDestinationId);
+
+
+
 
             TravelSalesmanProblem tsp = new TravelSalesmanProblem(0, rest, costMatrix, ComputeRouteFragment.finalDestinationId);
             route = tsp.execute().get();
@@ -425,47 +554,49 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+
+
     private int[] generateRest(int side, int finalDestinationId) {
         int[] rest;
-        if (finalDestinationId == 0) {
-            rest = new int[side - 1];
-            for (int i = 0; i < (side - 1); i++) {
-                rest[i] = i + 1;
-            }
-        } else {
-            boolean coincide = false;
-            rest = new int[side - 2];
-            for (int i = 0; i < (side - 1); i++) {
-                if ((i + 1) == finalDestinationId) {
-                    coincide = true;
-                } else {
-                    if (!coincide) {
-                        rest[i] = i + 1;
+            if (finalDestinationId == 0) {
+                rest = new int[side - 1];
+                for (int i = 0; i < (side - 1); i++) {
+                    rest[i] = i + 1;
+                }
+            } else {
+                boolean coincide = false;
+                rest = new int[side - 2];
+                for (int i = 0; i < (side - 1); i++) {
+                    if ((i + 1) == finalDestinationId) {
+                        coincide = true;
                     } else {
-                        rest[i - 1] = i + 1;
+                        if (!coincide) {
+                            rest[i] = i + 1;
+                        } else {
+                            rest[i - 1] = i + 1;
+                        }
                     }
                 }
             }
-        }
-        return rest;
+            return rest;
     }
 
     private void getCurrentLocation() {
 
-
+        Log.i("prueba ruta compleja", "getCurrentLocation");
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location loc = task.getResult();
                     if (loc != null) {
-                       // Log.i("prueba ruta compleja", "Loc no es null");
+                       Log.i("prueba ruta compleja", "Loc no es null");
                         Geocoder gc = new Geocoder(PlanRouteActivity.this, Locale.getDefault());
 
                         try {
                            // Log.i("prueba ruta compleja", "loc.getlatitude() is: " + loc.getLatitude() + ", loc.getlongitude() is: " + loc.getLongitude());
                             List<Address> addresses = gc.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
-                            //Log.i("prueba ruta compleja", "addres latitude is: " + addresses.get(0).getLatitude() + ", address lonfitude is: " + addresses.get(0).getLongitude());
+                            Log.i("prueba ruta compleja", "addres latitude is: " + addresses.get(0).getLatitude() + ", address lonfitude is: " + addresses.get(0).getLongitude());
                             currentLatitude = addresses.get(0).getLatitude();
                             currentLongitude = addresses.get(0).getLongitude();
                             currentLocationName = addresses.get(0).getAddressLine(0);
@@ -475,7 +606,7 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
                             e.printStackTrace();
                         }
                     }else{
-                        //Log.i("prueba ruta compleja", "No has obtenido la localización");
+                        Log.i("prueba ruta compleja", "No has obtenido la localización");
                     }
                 }
             });
@@ -537,62 +668,21 @@ public class PlanRouteActivity extends AppCompatActivity implements View.OnClick
 
 
 
+    private void displayFavRoute(Intent data) {
 
+        ComputeRouteFragment fragment = (ComputeRouteFragment) getSupportFragmentManager().findFragmentByTag("COMPUTE_ROUTE");
 
+        fragment.destinationsAdapter.getDestinationsList().clear();
+        String nameFavRoute = data.getStringExtra("fav_route_name");
 
-    /*
-    private ArrayList<Address> obtainDestinationsCoordinates() {
-        ArrayList<Address> destinationsAddresses = new ArrayList<>();
+        DbDestinations dbDestinations = new DbDestinations(this);
 
-
-        Geocoder gc = new Geocoder(this);
-
-        for (int i = 0; i < destinationsAdapter.getItemCount(); i++) {
-            ArrayList<Address> addresses;
-            RecyclerView.ViewHolder holder = rvDestinations.findViewHolderForAdapterPosition(i);
-
-            EditText etAddress = (EditText) holder.itemView.findViewById(R.id.destino_card);
-            String address = etAddress.getText().toString();
-            Log.i("Prueba ruta compleja", "Destino " + i + ": " + address);
-
-            try {
-                addresses = (ArrayList<Address>) gc.getFromLocationName(address, 1);
-                if (!addresses.isEmpty()) {
-                    destinationsAddresses.add(addresses.get(0));
-                } else {
-                    Toast.makeText(this, "El destino " + (i+1) + "es inválido", Toast.LENGTH_LONG).show();
-                    break;
-                }
-            } catch (IOException e) {
-                Log.i("Error", "Excepción al sacar coordenadas de un destino");
-                Toast.makeText(this, "El destino " + (i + 1) + "es inválido", Toast.LENGTH_LONG).show();
-            }
-        }
-        return destinationsAddresses;
+        fragment.destinationsAdapter.addItems(dbDestinations.showDestinationsOfSpecificRoute(nameFavRoute));
+        ComputeRouteFragment.tvNumberDestinations.setText(String.valueOf(fragment.destinationsAdapter.getItemCount()));
+        ComputeRouteFragment.buttonSimpleRoute.setVisibility(View.GONE);
 
     }
 
-    /*
-    public Address obtainStartingPointCoordinates() {
-
-        Geocoder gc = new Geocoder(this);
-        EditText etStartingPoint = (EditText) findViewById(R.id.punto_de_partida_ruta_compleja);
-        String address = etStartingPoint.getText().toString();
-        Log.i("Prueba ruta compleja", "Obteniendo coordenada de punto de partida");
-        ArrayList<Address> addresses = null;
-        try {
-            addresses = (ArrayList<Address>) gc.getFromLocationName(address, 1);
-        }catch(IOException e){
-            Log.i("Prueba ruta compleja", "Excepcion al obtener corrdenadas del punto de partida de la ruta compleja");
-        }
-        if(!addresses.isEmpty()) {
-            Log.i("Prueba ruta compleja", "El punto de partida es: " + addresses.get(0).getLatitude());
-            return addresses.get(0);
-        }else{
-            Toast.makeText(this, "Localización de salida inválida", Toast.LENGTH_LONG ).show();
-            return null;
-        }
-    }*/
 
 }
 

@@ -77,7 +77,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     //global variables
     final int PLAN_ROUTE_REQUEST = 100;
-    final String GOOGLE_KEY = "AIzaSyC-bfmAZTXvjIFjpaDHDpICvPA3lXCP_QU";
+    final String GOOGLE_KEY = "YOUR GOOGLE API KEY";
     public static GoogleMap map;
     public static PolylineOptions polylineOptions = new PolylineOptions();
     public static Polyline polyline = null;
@@ -96,6 +96,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     double currentLongitude;
     String currentLocationName;
     Location loc;
+    String mode;
+    boolean avoidTolls;
 
 
     //global views
@@ -107,6 +109,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private PlacesClient placesClient;
     private Marker markerStartingPoint;
     private Marker markerEndingPoint;
+    private Marker markerPosition;
     private BitmapDescriptor bitmapDescriptorEndFlag;
     //global views para manejar el buscador
     LinearLayout layoutAutocompleteStartingPoint;
@@ -122,6 +125,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageButton buttonDeleteEndingPoint;
     private View dividerSartingEndPoints;
     private View dividerEndingPointMap;
+    private ImageButton buttonMarker;
 
 
 
@@ -145,6 +149,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         language = prefs.getString("language", "es");
+        mode = prefs.getString("mode", "driving");
+        avoidTolls = prefs.getBoolean("avoid_tolls", true);
 
 
 
@@ -184,6 +190,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         buttonStartTrip.setOnClickListener(this);
         buttonCancelTrip.setOnClickListener(this);
         buttonFinishStage = findViewById(R.id.finish_stage_button);
+        buttonMarker = findViewById(R.id.button_marker);
+        buttonMarker.setOnClickListener(this);
 
         getCurrentLocation();
 
@@ -210,6 +218,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 @Override
                 public void onFinish() {
                     centerMapView(currentLatitude, currentLongitude);
+                    markerPosition = map.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Tu posición"));
                 }
             };
 
@@ -241,7 +250,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         if (!Places.isInitialized()) {
             if(language.equals("en")){
-                Places.initialize(getApplicationContext(), apiKey, Locale.ENGLISH);
+                Places.initialize(getApplicationContext(), apiKey);
             }else{
                 Places.initialize(getApplicationContext(), apiKey);
             }
@@ -265,8 +274,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 // TODO: Get info about the selected place.
-                map.clear();
-                Toast.makeText(getApplicationContext(), place.getName(), Toast.LENGTH_SHORT).show();
+                //map.clear();
+                //Toast.makeText(getApplicationContext(), place.getName(), Toast.LENGTH_SHORT).show();
                 startingPoint = place.getLatLng();
 
 
@@ -280,6 +289,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 if(endPoint == null){
                     initializeDestinationAutocompleteFragment();
                     centerMapView(place.getLatLng());
+                    markerStartingPoint = map.addMarker(new MarkerOptions().position(place.getLatLng()).title("Salida"));
                 }else{
                     if(startingPoint!=null) {
                         clearPolyline();
@@ -298,7 +308,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             @Override
             public void onError(@NonNull Status status) {
                 // TODO: Handle the error.
-                Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -323,7 +333,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 // TODO: Get info about the selected place.
-                map.clear();
+                //map.clear();
                 endPoint = place.getLatLng();
 
                 autocompleteEndingPointFragment.setText("");
@@ -331,7 +341,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 layoutEndingPoint.setVisibility(View.VISIBLE);
                 dividerEndingPointMap.setVisibility(View.VISIBLE);
                 tvEndingPoint.setText("Destino: " + place.getName());
-                markerStartingPoint = map.addMarker(new MarkerOptions().position(startingPoint).title("Salida"));
+
                 markerEndingPoint = map.addMarker(new MarkerOptions().position(endPoint).title("Destino").icon(bitmapDescriptorEndFlag));
                 //markerEndingPoint.setVisible(true);
                 if(endPoint!=null) {
@@ -349,7 +359,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             @Override
             public void onError(@NonNull Status status) {
                 // TODO: Handle the error.
-                Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -392,7 +402,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.cancel_trip_button:
 
                 if(use.equals("0")) {
-                    map.clear();
+                    clearPolyline();
+                    markerStartingPoint.remove();
+                    markerEndingPoint.remove();
+                    //markerPosition.setVisible(true);
                     clearPolyline();
                     buttonCancelTrip.setVisibility(View.GONE);
                     buttonStartTrip.setVisibility(View.GONE);
@@ -432,6 +445,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     centerMapView(endPoint.latitude, endPoint.longitude);
                 }
 
+                markerStartingPoint.remove();
+
                 tvStartingPoint.setText("");
                 layoutStartingPoint.setVisibility(View.GONE);
                 layoutAutocompleteStartingPoint.setVisibility(View.VISIBLE);
@@ -457,6 +472,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     dividerEndingPointMap.setVisibility(View.GONE);
                     centerMapView(new LatLng(currentLatitude, currentLongitude));
                 }
+
+                markerEndingPoint.remove();
 
                 break;
 
@@ -489,8 +506,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                             builder.setTitle("Estás lejos del punto de partida");
-                            builder.setMessage("Para entrar al modo navegación tienes que estar cerca del punto de partida seleccionado");
-                            builder.setPositiveButton(android.R.string.ok, null);
+                            builder.setMessage("La ruta se calculará desde tu ubicación actual. ¿Desea continuar?");
+                            builder.setPositiveButton("Continuar", new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" + endPoint.latitude + "," + endPoint.longitude + "&mode=d"));
+                                    intent.setPackage("com.google.android.apps.maps");
+                                    startActivity(intent);
+                                }
+                            });
+                            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            });
                             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                                 @Override
                                 public void onDismiss(DialogInterface dialog) {
@@ -515,7 +546,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 handler2.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(atDestination){
                             int stopTime = getIntent().getIntExtra("stop_time", 0);
                             if(stopTime>0) {
                                 AlertDialog builder = new AlertDialog.Builder(MainActivity.this).create();
@@ -554,7 +584,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                                 setResult(RESULT_OK, i);
                                 finish();
                             }
-                        }else{
+                        /*}else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                             builder.setTitle("No estás en el destino");
                             builder.setMessage("Para terminar etapa has de estar en el destino. Puedes marcarla como finalizada de forma manual en la pantalla de ruta.");
@@ -565,9 +595,37 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                                 }
                             });
                             builder.show();
-                        }
+                        }*/
                     }
                 }, 500);
+
+                break;
+
+            case R.id.button_marker:
+
+                startingPoint = new LatLng(currentLatitude, currentLongitude);
+
+
+                autocompleteStartingPointFragment.setText("");
+                layoutAutocompleteStartingPoint.setVisibility(View.GONE);
+                layoutStartingPoint.setVisibility(View.VISIBLE);
+                dividerSartingEndPoints.setVisibility(View.VISIBLE);
+                tvStartingPoint.setText("Salida: Tu posición");
+
+                if(endPoint == null){
+                    initializeDestinationAutocompleteFragment();
+                    centerMapView(startingPoint);
+                }else{
+                    if(startingPoint!=null) {
+                        clearPolyline();
+                        drawPolyline();
+                        buttonConfiguration.setVisibility(View.GONE);
+                        buttonStartTrip.setVisibility(View.VISIBLE);
+                        buttonCancelTrip.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                break;
 
             default:
                 return;
@@ -704,13 +762,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(coordinates, 18);
         map.animateCamera(cu, 1500, null);
-        markerStartingPoint = map.addMarker(new MarkerOptions().position(coordinates).title("Salida"));
+        //markerStartingPoint = map.addMarker(new MarkerOptions().position(coordinates).title("Salida"));
     }
 
 
 
     public void drawPolyline(){
-        String url = Path.getApiUrl(startingPoint, endPoint, "driving", GOOGLE_KEY);
+        String url = Path.getApiUrl(startingPoint, endPoint, mode, avoidTolls, GOOGLE_KEY);
         Log.i("url api", url);
         ParserJsonPath parserJsonPath = new ParserJsonPath();
         parserJsonPath.execute(url);

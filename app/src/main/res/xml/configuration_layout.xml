@@ -27,13 +27,17 @@
     <PreferenceCategory
         android:title="@string/título_preference_category_language"/>
 
+
+    <PreferenceCategory
+        android:title="Elige unidad de medida"/>
+
     <ListPreference
-        android:key="language"
-        android:title="@string/título_preference_language"
-        android:summary="@string/summary_preference_language"
-        android:entries="@array/language_names"
-        android:entryValues="@array/language_values"
-        android:defaultValue="@string/idioma_español_valor"/>
+        android:key="measurement"
+        android:title="Unidad de medida"
+        android:summary="Elige si quieres calcular la ruta en base al tiempo o la distancia"
+        android:entries="@array/measurement_names"
+        android:entryValues="@array/measurement_values"
+        android:defaultValue="tiempo"/>
 
 
 

@@ -63,4 +63,24 @@ public class DbRoutes extends DbAssistant {
 
         return routesList;
     }
+
+
+    public boolean deleteRouteByName(String nameRoute){
+        boolean result = false;
+
+        DbAssistant dbAssistant = new DbAssistant(context);
+        SQLiteDatabase db = dbAssistant.getWritableDatabase();
+
+        try{
+            db.execSQL("DELETE FROM " + TABLE_ROUTES + " WHERE name = \"" + nameRoute + "\"");
+            result = true;
+        }catch (Exception e){
+            e.toString();
+            result = false;
+        }finally {
+            db.close();
+        }
+
+        return result;
+    }
 }

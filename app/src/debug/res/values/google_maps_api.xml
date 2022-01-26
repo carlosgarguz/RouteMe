@@ -2,6 +2,6 @@
 <resources>
 
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
-        AIzaSyC-bfmAZTXvjIFjpaDHDpICvPA3lXCP_QU
+        <!-- write here your GOOGLE API KEY -->
     </string>
 </resources>

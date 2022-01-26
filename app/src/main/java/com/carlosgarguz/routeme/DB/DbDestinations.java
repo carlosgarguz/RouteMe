@@ -71,4 +71,53 @@ public class DbDestinations extends DbAssistant{
         return destinationsList;
     }
 
+    public ArrayList<DestinationCard> showDestinationsOfSpecificRoute(String nameRoute){
+        DbAssistant dbAssistant = new DbAssistant(context);
+        SQLiteDatabase db = dbAssistant.getWritableDatabase();
+
+        ArrayList<DestinationCard> destinationsList = new ArrayList<>();
+        DestinationCard destination = null;
+        Cursor destinationsCursor = null;
+
+        destinationsCursor = db.rawQuery("SELECT * FROM " + TABLE_DESTINATIONS +
+                " WHERE routeName = \"" + nameRoute + "\"", null);
+
+        if(destinationsCursor.moveToFirst()){
+            do{
+                destination = new DestinationCard();
+                destination.setId(destinationsCursor.getInt(0));
+                destination.setDestinationName(destinationsCursor.getString(2));
+                destination.setNumberStopTime(destinationsCursor.getInt(3));
+                destination.setStopTime("Se efectuará una parada de " +
+                        destinationsCursor.getInt(3) + " min");
+                destination.setLatitude(destinationsCursor.getDouble(4));
+                destination.setLongitude(destinationsCursor.getDouble(5));
+                destinationsList.add(destination);
+            }while (destinationsCursor.moveToNext());
+        }
+
+        destinationsCursor.close();
+
+        return destinationsList;
+    }
+
+    public boolean deleteDestinationsOfSpecificRoute(String nameRoute){
+        boolean result = false;
+
+        DbAssistant dbAssistant = new DbAssistant(context);
+        SQLiteDatabase db = dbAssistant.getWritableDatabase();
+
+        try{
+            db.execSQL("DELETE FROM " + TABLE_DESTINATIONS + " WHERE routeName = \"" + nameRoute + "\"");
+            result = true;
+        }catch (Exception e){
+            e.toString();
+            result = false;
+        }finally {
+            db.close();
+        }
+
+        return result;
+    }
+
 }

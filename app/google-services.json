@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "550730434163",
+    "project_id": "routeme-2afa3",
+    "storage_bucket": "routeme-2afa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550730434163:android:ee2d807f4e2983a9278c06",
+        "android_client_info": {
+          "package_name": "com.carlosgarguz.routeme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550730434163-gqhqmupepl971tk7c2p751ua47alg7m0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "YOUR GOOGLE API KEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550730434163-gqhqmupepl971tk7c2p751ua47alg7m0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

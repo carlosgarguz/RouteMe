@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                android:text="Nombre destino"
+                android:text="@string/tv_destination_card_nombre_destino"
                 android:autoSizeTextType="uniform"
                 android:typeface="sans"
                 android:layout_marginRight="5dp"
@@ -71,7 +71,7 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/grey"
                 android:textStyle="italic"
-                android:text="Se efectuará una parad de "
+                android:text="@string/texto_parada"
 
                 >
 
@@ -86,7 +86,7 @@
                 android:id="@+id/check_box_is_last_point"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Destino final"
+                android:text="@string/check_box_destination_card_text"
                 android:textColor="@color/grey"
                 android:textStyle="italic"
                 android:layout_marginRight="5dp"

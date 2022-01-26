@@ -20,6 +20,7 @@ import com.carlosgarguz.routeme.activities.ComputeRouteFragment;
 import com.carlosgarguz.routeme.activities.PlanRouteActivity;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DestinationsAdapter extends RecyclerView.Adapter<DestinationsAdapter.DestinationsViewHolder>{
@@ -65,6 +66,11 @@ public class DestinationsAdapter extends RecyclerView.Adapter<DestinationsAdapte
             ComputeRouteFragment.buttonSimpleRoute.setVisibility(View.GONE);
         }
         destinationsList.add(destino);
+        notifyDataSetChanged();
+    }
+
+    public void addItems(ArrayList<DestinationCard> list){
+        destinationsList.addAll(list);
         notifyDataSetChanged();
     }
 

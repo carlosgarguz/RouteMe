@@ -69,11 +69,27 @@
                 android:layout_marginBottom="40dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/rounded_corner"
-                android:text="100 min"
                 android:textColor="#08137A"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 tools:ignore="RtlCompat">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/text_view_total_distance"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|left"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/rounded_corner"
+                android:textColor="#08137A"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat"
+                android:visibility="gone">
 
             </TextView>
 

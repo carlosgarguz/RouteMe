@@ -1,9 +1,13 @@
 package com.carlosgarguz.routeme.utils;
 
+import java.util.ArrayList;
+
 public class RouteCardDb {
 
     private int id;
     private String name;
+    private ArrayList<String> listDestinations;
+
 
 
     public RouteCardDb() {
@@ -28,5 +32,13 @@ public class RouteCardDb {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ArrayList<String> getListDestinations() {
+        return listDestinations;
+    }
+
+    public void setListDestinations(ArrayList<String> listDestinations) {
+        this.listDestinations = listDestinations;
     }
 }

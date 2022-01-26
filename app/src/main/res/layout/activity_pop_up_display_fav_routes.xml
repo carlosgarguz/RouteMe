@@ -18,11 +18,20 @@
 
     </TextView>
 
+
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_fav_routes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corners_transparent"
+        android:layout_margin="10dp"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
+
+
 
 </LinearLayout>

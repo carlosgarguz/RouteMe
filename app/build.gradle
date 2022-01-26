@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -37,6 +39,7 @@ android {
 
 dependencies {
 
+    //Por defecto
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -44,11 +47,8 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
     implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
-
-    // If you are using Places, add all of the dependencies below
-   // implementation name:'places-maps-sdk-3.1.0-beta', ext:'aar'
+    //Dependencias de google
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     implementation 'com.google.auto.value:auto-value-annotations:1.6.2'
     implementation "androidx.cardview:cardview:1.0.0"
@@ -56,12 +56,16 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.android.gms:play-services-analytics:17.0.0'
-
-
+    //Dependencia para uso de imágenes cirulares
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Dependencia necesaria para administrar las peticiones de permisos
     implementation "androidx.activity:activity:1.2.2"
-
-
-
-
+    //Dependencias de firebase
+    implementation platform('com.google.firebase:firebase-bom:28.3.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.firebase:geofire-android-common:3.1.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.2'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

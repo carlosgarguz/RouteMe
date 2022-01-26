@@ -12,7 +12,8 @@
     <item
         android:id="@+id/action_fav_routes"
         app:showAsAction="ifRoom"
-        android:icon="@android:drawable/star_big_on">
+        android:icon="@android:drawable/star_big_on"
+        android:title="">
 
     </item>
 

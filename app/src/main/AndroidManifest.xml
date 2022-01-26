@@ -11,7 +11,7 @@
         android:theme="@style/Theme.RouteMe">
         <activity
             android:name=".activities.PlanRouteActivity"
-            android:label="PlanRouteActivity">
+            android:label="RouteMe">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,6 +32,12 @@
         <activity
             android:name=".activities.PopUpDisplayFavRoutesActivity"
             android:label="PopUpDisplayFavRoutesActivity"
+            android:parentActivityName=".activities.PlanRouteActivity"
+            android:theme="@style/Theme.RouteMe.PopUps">
+        </activity>
+        <activity
+            android:name=".activities.PopUpFirebaseInfoActivity"
+            android:label="PopUpFirebaseInfoActivitya"
             android:parentActivityName=".activities.PlanRouteActivity"
             android:theme="@style/Theme.RouteMe.PopUps">
         </activity>

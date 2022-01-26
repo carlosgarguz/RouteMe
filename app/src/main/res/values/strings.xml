@@ -6,7 +6,7 @@
     <string name="create_route_button"> Crear ruta </string>
     <string name="titulo_plan_route"> Planea tu ruta </string>
     <string name="duracion_card"> Duración </string>
-    <string name="stage"> Stage </string>
+    <string name="stage"> Etapa </string>
     <string name="numero_de_destinos"> Número de destinos </string>
     <string name="numero_rutas_restantes"> Etapas restantes </string>
     <string name="duracion_total"> Duración total</string>
@@ -16,7 +16,7 @@
     <string name="firebase_default_message">Sin información sobre este lugar</string>
     <string name="tiempo_parada"> Programar parada (min): </string>
     <string name="confirmar"> Confirmar </string>
-    <string name="reestablecer"> Reestablecer </string>
+    <string name="reestablecer"> Restablecer </string>
     <string name="texto_snack_bar"> ¿Lo borraste por error? </string>
     <string name="deshacer_snack_bar"> Deshacer </string>
     <string name="titulo_actividad_planear_ruta"> Planea tu ruta </string>
@@ -26,7 +26,7 @@
     <string name="pregunta_qué_hacer"> ¿Qué quieres hacer? </string>
 
 
-    <string name="resetear_preferences"> Reestablecer valores predeterminados </string>
+    <string name="resetear_preferences"> Restablecer valores predeterminados </string>
 
     <!--Preference-->
     <string name="título_preference_category_medio_de_transporte"> Elige medio de transporte </string>
@@ -48,6 +48,7 @@
     <string name="idioma_español_valor">es</string>
     <string name="idioma_inglés_valor">en</string>
     <string name="title_pop_up_fav_routes"> Estas son tus rutas favoritas </string>
+    <string name="texto_selecciona_punto_de_partida"> Selecciona punto de partida</string>
 
     <!--Opciones rutas favoritas-->
     <string name="añadir_a_favoritas"> Añadir a rutas favoritas </string>
@@ -68,5 +69,20 @@
 
     <string name="open_navigation_drawer">Abrir</string>
     <string name="close_navigation_drawer">Cerrar</string>
+
+    <string name="obtener_info"> Obtener información </string>
+    <string name="tv_destination_card_nombre_destino"> Nombre destino </string>
+    <string name="texto_parada"> Se efectuará una parada de </string>
+    <string name="check_box_destination_card_text"> Destino final </string>
+    <string name="pregunta_carga_y_descarga"> ¿Hay zona de carga y descarga? </string>
+    <string name="pregunta_aparcamiento"> ¿Te ha resultado fácil aparcar? </string>
+    <string name="pregunta_doble_fila"> ¿Es posible aparcar en doble fila? </string>
+    <string name="pregunta_trafico">¿Hay mucho tráfico?</string>
+    <string name="enviar_info">Enviar información</string>
+    <string name="calculando_ruta"> Calculando ruta...</string>
+    <string name="eliminar"> Eliminar </string>
+    <string name="lanzar"> lanzar </string>
+    <string name="favoritos"> Favoritos </string>
+
 
 </resources>

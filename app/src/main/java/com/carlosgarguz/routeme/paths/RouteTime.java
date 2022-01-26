@@ -10,6 +10,8 @@ public class RouteTime{
     private int endPointID;
     private String startPointName;
     private String endPointName;
+    private String textDistance;
+    private long distanceInNumber;
 
 
     public RouteTime(String textTime, long timeInSeconds, int startPointID, int endPointID) {
@@ -19,6 +21,8 @@ public class RouteTime{
         this.endPointID = endPointID;
     }
 
+
+
     public RouteTime() {
         this.textTime ="";
         this.timeInSeconds=0;
@@ -26,6 +30,8 @@ public class RouteTime{
         this.endPointID = -1;
         this.startPointName = "";
         this.endPointName = "";
+        this.textDistance = "";
+        this.distanceInNumber = 0;
     }
 
     public RouteTime(int startPointID, int endPointID) {
@@ -81,5 +87,21 @@ public class RouteTime{
 
     public void setEndPointName(String endPointName) {
         this.endPointName = endPointName;
+    }
+
+    public String getTextDistance() {
+        return textDistance;
+    }
+
+    public void setTextDistance(String textDistance) {
+        this.textDistance = textDistance;
+    }
+
+    public long getDistanceInNumber() {
+        return distanceInNumber;
+    }
+
+    public void setDistanceInNumber(long distanceInNumber) {
+        this.distanceInNumber = distanceInNumber;
     }
 }

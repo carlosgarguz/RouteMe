@@ -58,6 +58,7 @@ public class PopUpPlaceActivity extends FragmentActivity implements View.OnClick
     Button buttonResetDestination;
     LatLng destinationCoordinates;
     String language;
+    Button buttonObtainInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class PopUpPlaceActivity extends FragmentActivity implements View.OnClick
         buttonConfirmDestination.setOnClickListener(this);
         buttonResetDestination = (Button) findViewById(R.id.button_reset_place);
         buttonResetDestination.setOnClickListener(this);
+        buttonObtainInfo = findViewById(R.id.button_get_place_info);
+        buttonObtainInfo.setOnClickListener(this);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -89,12 +92,12 @@ public class PopUpPlaceActivity extends FragmentActivity implements View.OnClick
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        getWindow().setLayout((int) (width * .85), (int) (height * .6));
+        getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.CENTER;
         params.x = 0;
-        params.y = -20;
+        params.y = 0;
 
         //popUp.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -135,6 +138,7 @@ public class PopUpPlaceActivity extends FragmentActivity implements View.OnClick
                 destination.setVisibility(View.VISIBLE);
                 destination.setText("Destino: " + place.getAddress());
                 destinationCoordinates = place.getLatLng();
+                //buttonObtainInfo.setVisibility(View.VISIBLE);
 
 
             }
@@ -142,7 +146,7 @@ public class PopUpPlaceActivity extends FragmentActivity implements View.OnClick
             @Override
             public void onError(@NonNull Status status) {
                 // TODO: Handle the error.
-                Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -182,9 +186,21 @@ public class PopUpPlaceActivity extends FragmentActivity implements View.OnClick
                 layoutAutoCompleteFragment.setVisibility(View.VISIBLE);
                 autoCompletePlaceFragment.setText("");
                 tvStopTime.setText("0");
+                //buttonObtainInfo.setVisibility(View.GONE);
                 destinationCoordinates = null;
 
                 break;
+
+            case R.id.button_get_place_info:
+                if(!destination.getText().toString().equals("")) {
+                    Intent i = new Intent(PopUpPlaceActivity.this, PopUpFirebaseInfoActivity.class);
+                    i.putExtra("street_name", destination.getText().toString());
+                    i.putExtra("latitude", destinationCoordinates.latitude);
+                    i.putExtra("longitude", destinationCoordinates.longitude);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(PopUpPlaceActivity.this, "Debes seleccionar un destino", Toast.LENGTH_LONG).show();
+                }
 
             default:
                 break;

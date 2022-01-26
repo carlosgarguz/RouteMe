@@ -7,6 +7,8 @@ public class RouteCard {
     private String durationText;
     private long durationNumber;
     private int stopTime;
+    private String distanceText;
+    private long distanceNumber;
 
     public RouteCard() {
     }
@@ -57,5 +59,21 @@ public class RouteCard {
 
     public void setStopTime(int stopTime) {
         this.stopTime = stopTime;
+    }
+
+    public String getDistanceText() {
+        return distanceText;
+    }
+
+    public void setDistanceText(String distanceText) {
+        this.distanceText = distanceText;
+    }
+
+    public long getDistanceNumber() {
+        return distanceNumber;
+    }
+
+    public void setDistanceNumber(long distanceNumber) {
+        this.distanceNumber = distanceNumber;
     }
 }

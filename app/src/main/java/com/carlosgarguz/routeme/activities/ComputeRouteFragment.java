@@ -12,7 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +26,8 @@ import com.carlosgarguz.routeme.utils.DestinationCard;
 import com.carlosgarguz.routeme.utils.DestinationsAdapter;
 import com.carlosgarguz.routeme.utils.SwipeDestinationCardCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,6 +44,12 @@ public class ComputeRouteFragment extends Fragment  {
 
     DestinationsAdapter destinationsAdapter;
     public static TextView tvNumberDestinations;
+    //private int startingPoint = 0;
+
+    /*private ListPopupWindow popupPOI;
+    private ImageButton buttonPopUpList;
+    private TextView tvPoi;
+    private ArrayList<String> listaPOI = new ArrayList<>();*/
 
     public static boolean finalDestinationSelected;
     public static int finalDestinationId;
@@ -110,11 +123,57 @@ public class ComputeRouteFragment extends Fragment  {
         finalDestinationSelected = false;
         finalDestinationId = 0;
 
+        /*buttonPopUpList = rootView.findViewById(R.id.button_open_POI_list);
+        buttonPopUpList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popupPOI.isShowing()) {
+                    popupPOI.dismiss();
+                    //comunicacion.enviarCoordenada(new CoordenadaBVeloz(usernameAplicaziones, 0.0, 0.0));
+                }else {
+                    popupPOI.show();
+                }
+            }
+        });
+        tvPoi = rootView.findViewById(R.id.text_view_POI);
+        listaPOI.add("Tu localización");
+        setPopupList();*/
         inicializarRecycler(rootView);
 
         // Inflate the layout for this fragment
         return rootView;
     }
+
+    /*private void setPopupList() {
+
+
+        popupPOI = new ListPopupWindow(getContext());
+
+
+
+        ArrayAdapter adapterPOI = new ArrayAdapter<>(getContext(), R.layout.item_poi_list, R.id.text_item_poi_list, listaPOI);
+
+        popupPOI.setAnchorView(tvPoi); //this let as set the popup below the EditText
+        popupPOI.setAdapter(adapterPOI);
+        popupPOI.setVerticalOffset(20);
+        popupPOI.setHorizontalOffset(20);
+        popupPOI.setBackgroundDrawable(null);
+
+        popupPOI.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                tvPoi.setText("Punto de partida: " + listaPOI.get(position));
+                ((PlanRouteActivity)getActivity()).startingPoint = position;
+                if(finalDestinationId==0){
+                    finalDestinationId = position;
+                }
+                popupPOI.dismiss();
+
+
+            }
+        });
+    }*/
 
 
     private void inicializarRecycler(View rootView) {
@@ -147,12 +206,14 @@ public class ComputeRouteFragment extends Fragment  {
                 }
                 //destino.setdestinationNumber("Destino " + (destinationsAdapter.getItemCount()+1) + ":");
                 destino.setDestinationName(data.getStringExtra("destination_name"));
+                //listaPOI.add(data.getStringExtra("destination_name"));
                 destino.setNumberStopTime(Integer.parseInt(data.getStringExtra("stop_time")));
                 destino.setStopTime("Se efectuará una parada de " + data.getStringExtra("stop_time") + " min");
                 destino.setLatitude(Double.parseDouble(data.getStringExtra("destination_latitude")));
                 destino.setLongitude(Double.parseDouble(data.getStringExtra("destination_longitude")));
                 destino.setId(((PlanRouteActivity)getActivity()).listDestinations.size()+1);
                 destinationsAdapter.addItem(destino);
+
                 String numberDestinations =  String.valueOf(destinationsAdapter.getItemCount());
                 tvNumberDestinations.setText(numberDestinations);
 

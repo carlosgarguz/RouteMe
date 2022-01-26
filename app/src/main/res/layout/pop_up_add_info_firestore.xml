@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pop_up_add_info_firestore"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+
+            <TextView
+                android:id="@+id/text_view_street_name_firebase_pop_up"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:layout_marginBottom="10dp">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_white"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            >
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_carga_descarga"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="visible"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/black"
+                android:gravity="center"
+                android:src="@drawable/ic_carga_descarga"
+                >
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/text_view_info_carga_y_descarga"
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginBottom="2dp"
+                    android:padding="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="35"
+                    android:text="@string/pregunta_carga_y_descarga"
+                    >
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="65"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
+                    >
+
+
+
+                    <ImageButton
+                        android:id="@+id/button_neg_carga_descarga"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_negative"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/button_pos_carga_descarga"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_positive"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_white"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            >
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="visible"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/black"
+                android:gravity="center"
+                android:src="@drawable/ic_parking"
+                >
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginBottom="2dp"
+                    android:padding="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="35"
+                    android:text="@string/pregunta_aparcamiento"
+                    >
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="65"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
+                    >
+
+
+
+                    <ImageButton
+                        android:id="@+id/button_neg_parking"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_negative"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/button_pos_parking"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_positive"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_white"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            >
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="visible"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/black"
+                android:gravity="center"
+                android:src="@drawable/ic_doble_fila"
+                >
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginBottom="2dp"
+                    android:padding="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="35"
+                    android:text="@string/pregunta_doble_fila"
+                    >
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="65"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
+                    >
+
+
+
+                    <ImageButton
+                        android:id="@+id/button_neg_doble_fila"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_negative"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/button_pos_doble_fila"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_positive"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners_white"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            >
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="visible"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/black"
+                android:gravity="center"
+                android:src="@drawable/ic_traffic"
+                >
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginBottom="2dp"
+                    android:padding="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="35"
+                    android:text="@string/pregunta_trafico"
+                    >
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="65"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
+                    >
+
+
+
+                    <ImageButton
+                        android:id="@+id/button_neg_traffic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_negative"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/button_pos_traffic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:src="@drawable/ic_positive"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@color/grey">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_send_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/enviar_info">
+
+        </Button>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

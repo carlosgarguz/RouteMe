@@ -71,17 +71,21 @@ public class Path {
         this.mode = mode;
     }
 
-    public static String getApiUrl(LatLng startingPoint, LatLng destination, String modo, String key){
+    public static String getApiUrl(LatLng startingPoint, LatLng destination, String modo, boolean avoidTolls, String key){
         String url = "https://maps.googleapis.com/maps/api/directions/json?";
         String origin = "origin=" + startingPoint.latitude+ "," + startingPoint.longitude;
         String destinationText = "destination=" + destination.latitude + "," + destination.longitude;
         String mode = "mode=" + modo;
         String sKey = "key=" + key;
-        return url + origin + "&" + destinationText + "&" + mode + "&" + sKey;
+        if(avoidTolls) {
+            return url + origin + "&" + destinationText + "&" + mode + "&" + "avoid=tolls&" + "language=es&" + sKey;
+        }else{
+            return url + origin + "&" + destinationText + "&" + mode + "&" + "language=es&" + sKey;
+        }
 
     }
 
-    public static String getMatrixApiUrl( ArrayList<LatLng> destinationsCoordinates, String modo, String language, String key ){
+    public static String getMatrixApiUrl( ArrayList<LatLng> destinationsCoordinates, String modo, String language, boolean avoidTolls, String key ){
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
 
         String origins = "origins=";
@@ -102,8 +106,11 @@ public class Path {
         String slanguage = "language=" + language;
         String sKey = "key=" + key;
 
-        return url + origins + "&" + destinations + "&" + mode + "&" + slanguage + "&" + sKey;
-
+        if(avoidTolls) {
+            return url + origins + "&" + destinations + "&" + mode + "&" + slanguage + "&" + "avoid=tolls&" + sKey;
+        }else{
+            return url + origins + "&" + destinations + "&" + mode + "&" + slanguage + "&" + sKey;
+        }
     }
 
     //Puedes intentar hacerlo recursivo

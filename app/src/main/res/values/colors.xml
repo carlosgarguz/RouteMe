@@ -15,5 +15,6 @@
     <color name="grey"> #C6CFCD </color>
     <color name="transparent"> #00000000 </color>
     <color name="yellow_down_arrow"> #FFED1A </color>
+    <color name="grey_pressed">#4E4E4C</color>
 
 </resources>

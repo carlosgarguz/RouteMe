@@ -29,4 +29,14 @@
     </string-array>
 
 
+    <string-array name="measurement_names">
+        <item>Tiempo</item>
+        <item>Distancia</item>
+    </string-array>
+
+    <string-array name="measurement_values">
+        <item>tiempo</item>
+        <item>distancia</item>
+    </string-array>
+
 </resources>
