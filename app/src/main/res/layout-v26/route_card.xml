@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    >
+
+    <LinearLayout
+        android:id="@+id/layout_route_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_destination_back"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            >
+
+            <!--<TextView
+                android:id="@+id/destination_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Destino X"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:layout_marginLeft="5dp"
+                >
+
+            </TextView>-->
+
+            <TextView
+                android:id="@+id/route_starting_point_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="95"
+                android:text="Nombre destino"
+                android:autoSizeTextType="uniform"
+                android:typeface="sans"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                >
+
+            </TextView>
+
+            
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="7"
+                android:src="@drawable/ic_down"
+
+                >
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/route_duration"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="93"
+                android:textColor="@color/yellow_down_arrow"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            >
+
+            <!--<TextView
+                android:id="@+id/destination_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Destino X"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:layout_marginLeft="5dp"
+                >
+
+            </TextView>-->
+
+
+
+            <TextView
+                android:id="@+id/route_ending_point_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="Nombre destino"
+                android:autoSizeTextType="uniform"
+                android:typeface="sans"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+
+                >
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_stop_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="7"
+                android:src="@drawable/ic_down"
+
+                >
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="7"
+                android:src="@drawable/ic_rest"
+
+                >
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/text_view_rest_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="86"
+                android:textColor="@color/yellow_down_arrow"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
